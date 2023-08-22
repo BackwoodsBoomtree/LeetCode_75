@@ -17,20 +17,28 @@ public class Solution
         // Cast array of int to list of doubles
         for (int i = 0; i < nums.Length; i++)
         {
-            doubleNums[i] = Convert.ToDouble(nums[i]);
+            if (nums[i] > -10E4 && nums[i] <= 10E4)
+            {
+                doubleNums[i] = Convert.ToDouble(nums[i]);
+            }
+            else
+            {
+                return 0;
+            }
         }
 
-        if (nums.Length == 1)
+        if (nums.Length <= 1 || k < 1 || k > nums.Length || nums.Length > 10E5)
         {
             return doubleNums[0];
         }
 
         for (int i  = 0; i < doubleNums.Length - k + 1; i++)
         {
-            double loopAverage = doubleNums[i..(i + k )].Average();
-            doubleList.Add(loopAverage);
+            // Do not need to average as the greatest sum computes faster
+            double loopSum = doubleNums[i..(i + k )].Sum();
+            doubleList.Add(loopSum);
         }
 
-        return doubleList.Max();
+        return doubleList.Max() / k;
     }
 }
